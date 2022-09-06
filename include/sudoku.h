@@ -20,16 +20,16 @@ typedef struct Square
     Box *box;
 
     /* [0] [1] [2] [3] [4] [5] [6] [7] [8] */
-    /* [F] [F] [F] [F] [F] [F] [F] [F] [F] */
+    /* [0] [0] [0] [0] [0] [0] [0] [0] [0] */
     /* Can it be a 0 -> False, can it be a 1 -> False, etc */
-    bool possible[9];
+    int possible[9];
     int solvable;
     int row;
     int col;
 } Square;
 
 int **createPuzzle();
-void printPuzzle(int **puzzle);
+void printPuzzle(Square ***puzzle);
 Square ***setUpPuzzle(int **puzzle);
 void intiBoolToTrue(Square ***sudoku, int row, int col);
 int updateSudoku(Square ***sudoku, int row, int col);

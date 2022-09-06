@@ -5,7 +5,7 @@ void initBoolToTrue(Square ***sudoku, int row, int col)
     int x;
     for (x = 0; x < SIZE_ROWS; x++)
     {
-        sudoku[row][col]->possible[x] = true;
+        sudoku[row][col]->possible[x] = 0;
     }
 }
 
@@ -24,10 +24,11 @@ Square ***setUpPuzzle(int **puzzle)
         // Looping through columns (j)
         for (j = 0; j < SIZE_COLS; j++)
         {
-            sudoku[i][j] = (Square *)malloc(sizeof(Square) * 9);
+            sudoku[i][j] = (Square *)malloc(sizeof(Square));
             sudoku[i][j]->num = puzzle[i][j];
             sudoku[i][j]->row = i;
             sudoku[i][j]->col = j;
+            sudoku[i][j]->solvable = 9;
             // sudoku[i][j]->box = i%3;
 
             initBoolToTrue(sudoku, i, j);
@@ -58,20 +59,20 @@ int updateSudoku(Square ***sudoku, int row, int col)
 
     for (x = 0; x < SIZE_ROWS; x++)
     {
-        if (sudoku[x][col]->possible[number - 1] == false)
+        if (sudoku[x][col]->possible[number - 1] == 0)
         {
             sudoku[x][col]->solvable--;
         }
-        sudoku[x][col]->possible[number - 1] = true;
+        sudoku[x][col]->possible[number - 1] = 1;
     }
 
     for (x = 0; x < SIZE_COLS; x++)
     {
-        if (sudoku[row][x]->possible[number - 1] == false)
+        if (sudoku[row][x]->possible[number - 1] == 0)
         {
             sudoku[row][x]->solvable--;
         }
-        sudoku[row][x]->possible[number - 1] = true;
+        sudoku[row][x]->possible[number - 1] = 1;
     }
 
     return 1;
@@ -102,7 +103,7 @@ int **createPuzzle()
 {
     int **puzzle;
     int i, j;
-    int arr[9][9] = {0, 1, 9, 0, 0, 2, 0, 0, 0,
+    int arr[9][9] = {0, 1, 9, 8, 0, 2, 0, 0, 0,
                      4, 7, 0, 6, 9, 0, 0, 0, 1,
                      0, 0, 0, 4, 0, 0, 0, 9, 0,
 
@@ -110,8 +111,8 @@ int **createPuzzle()
                      0, 0, 0, 0, 0, 0, 0, 0, 0,
                      0, 0, 0, 2, 0, 1, 9, 5, 8,
 
-                     0, 5, 0, 0, 0, 6, 0, 0, 0,
-                     6, 0, 0, 0, 2, 8, 0, 7, 9,
+                     0, 5, 0, 7, 0, 6, 0, 0, 0,
+                     6, 0, 0, 3, 2, 8, 0, 7, 9,
                      0, 0, 0, 1, 0, 0, 8, 6, 0};
 
     // allocate memory for all arrays
@@ -130,7 +131,7 @@ int **createPuzzle()
     return puzzle;
 }
 
-void printPuzzle(int **puzzle)
+void printPuzzle(Square ***puzzle)
 {
     int i, j;
     printf("-------------------------------\n");
@@ -139,7 +140,7 @@ void printPuzzle(int **puzzle)
         printf("|");
         for (j = 0; j < SIZE_COLS; j++)
         {
-            printf(" %d ", puzzle[i][j]);
+            printf(" %d ", puzzle[i][j]->num);
 
             if ((j + 1) % 3 == 0)
                 printf("|");
