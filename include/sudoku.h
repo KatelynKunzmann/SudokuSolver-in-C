@@ -22,7 +22,7 @@ typedef struct Square
     /* [0] [1] [2] [3] [4] [5] [6] [7] [8] */
     /* [0] [0] [0] [0] [0] [0] [0] [0] [0] */
     /* Can it be a 0 -> False, can it be a 1 -> False, etc */
-    int possible[9];
+    bool possible[9];
     int solvable;
     int row;
     int col;

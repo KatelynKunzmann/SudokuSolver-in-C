@@ -5,7 +5,7 @@ void initBoolToTrue(Square ***sudoku, int row, int col)
     int x;
     for (x = 0; x < SIZE_ROWS; x++)
     {
-        sudoku[row][col]->possible[x] = 0;
+        sudoku[row][col]->possible[x] = true;
     }
 }
 
@@ -59,20 +59,20 @@ int updateSudoku(Square ***sudoku, int row, int col)
 
     for (x = 0; x < SIZE_ROWS; x++)
     {
-        if (sudoku[x][col]->possible[number - 1] == 0)
+        if (sudoku[x][col]->possible[number - 1] == true)
         {
             sudoku[x][col]->solvable--;
         }
-        sudoku[x][col]->possible[number - 1] = 1;
+        sudoku[x][col]->possible[number - 1] = false;
     }
 
     for (x = 0; x < SIZE_COLS; x++)
     {
-        if (sudoku[row][x]->possible[number - 1] == 0)
+        if (sudoku[row][x]->possible[number - 1] == true)
         {
             sudoku[row][x]->solvable--;
         }
-        sudoku[row][x]->possible[number - 1] = 1;
+        sudoku[row][x]->possible[number - 1] = false;
     }
 
     return 1;
@@ -103,7 +103,7 @@ int **createPuzzle()
 {
     int **puzzle;
     int i, j;
-    int arr[9][9] = {0, 1, 9, 8, 0, 2, 0, 0, 0,
+    int arr[9][9] = {0, 1, 9, 0, 0, 2, 0, 0, 0,
                      4, 7, 0, 6, 9, 0, 0, 0, 1,
                      0, 0, 0, 4, 0, 0, 0, 9, 0,
 
@@ -111,8 +111,8 @@ int **createPuzzle()
                      0, 0, 0, 0, 0, 0, 0, 0, 0,
                      0, 0, 0, 2, 0, 1, 9, 5, 8,
 
-                     0, 5, 0, 7, 0, 6, 0, 0, 0,
-                     6, 0, 0, 3, 2, 8, 0, 7, 9,
+                     0, 5, 0, 0, 0, 6, 0, 0, 0,
+                     6, 0, 0, 0, 2, 8, 0, 7, 9,
                      0, 0, 0, 1, 0, 0, 8, 6, 0};
 
     // allocate memory for all arrays

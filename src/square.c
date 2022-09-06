@@ -6,7 +6,7 @@ int solveSquare(Square *square)
 
     for (x = 0; x < SIZE_ROWS; x++)
     {
-        if (square->possible[x] == 0)
+        if (square->possible[x] == true)
         {
             square->num = x + 1;
             square->solvable = 0;
